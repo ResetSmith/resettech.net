@@ -191,3 +191,25 @@ search auth.log for the term "Connection closed" and make a list of the IP addre
 grep "Connection closed" /var/log/auth.log | grep -Po "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" | sort | uniq -c
 ```
 {{< /note >}}
+
+
+<!--UFW Notes-->
+{{< note title="UFW Notes" >}}
+allow SSH access from specific IP
+```
+ufw allow from $IP to any port 22
+```
+allow incoming Rsync access from specific IP
+```
+ufw allow from $IP to any port 873
+```
+Reject access to specific IP
+Reject is preferable to Deny, Reject returns an error message to the requestor
+
+Deny just drops the packets from the requestor who will eventually time out
+
+the requestor will not see an error message when using Deny
+```
+ufw reject from $IP to any
+```
+{{< /note >}}
