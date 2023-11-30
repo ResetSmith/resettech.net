@@ -86,20 +86,20 @@ sudo a2enmod proxy proxy_http
 This works similarly to above except it will appply a SSL certificate as well.
 ```Apache
 <VirtualHost *:80>
-ServerName storage.casat.org
-Redirect Permanent / https://storage.casat.org/
+ServerName $FQDN
+Redirect Permanent / https://$FQDN
 </VirtualHost>
 
 <VirtualHost *:443>
-  ServerName storage.casat.org
+  ServerName $FQDN
   SSLEngine On
-  SSLCertificateFile    /etc/letsencrypt/live/storage.casat.org/fullchain.pem
-  SSLCertificateKeyFile /etc/letsencrypt/live/storage.casat.org/privkey.pem
+  SSLCertificateFile    $PATH_TO_CERTIFICATE
+  SSLCertificateKeyFile $PATH_TO_PRIVATE_KEY
   ProxyRequests Off
   <Location />
     ProxyPreserveHost On
-    ProxyPass         http://137.184.11.237:8080/
-    ProxyPassReverse  http://137.184.11.237:8080/
+    ProxyPass         http://$IP:$PORT/
+    ProxyPassReverse  http://$IP:$PORT/
   </Location>
   # uncomment for SSL
   SSLProxyEngine On  
